@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIRDHAUS - Forms Over Feathers</title>
+  <meta name="description" content="Birdhaus: a modernist movement of geometric avian studies. Est. 2026.">
+
+  <!-- ============================================================
+       FAVICON - inline SVG (red circle + black bar, Bauhaus mark).
+       Swap the <svg> below for your own mark if desired.
+       Most modern browsers render this; older ones simply ignore it.
+       ============================================================ -->
+  <link rel="icon" href="data:image/svg+xml,
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
+      <rect width='32' height='32' fill='%23F4F1EA'/>
+      <circle cx='16' cy='13' r='8' fill='%23D8392B'/>
+      <rect x='14' y='13' width='4' height='16' fill='%23141414'/>
+    </svg>">
+
+  <link rel="stylesheet" href="static/css/styles.css">
+</head>
+
+<body>
+  <!-- ============================================================
+       1 + 2 + 3 + 4 + 5 + 6 - POSTER HERO
+       Full viewport. Asymmetrical Bauhaus grid: title block, the
+       geometric bird, the red sun motif, and the vertical bars all
+       live here as one composition.
+       ============================================================ -->
+  <header class="poster" role="banner">
+
+    <!-- Vertical black bars (decorative structural rules) -->
+    <div class="bars" aria-hidden="true">
+      <span class="bar bar--1"></span>
+      <span class="bar bar--2"></span>
+      <span class="bar bar--3"></span>
+    </div>
+
+    <!-- Red circle / sun motif. Eases into place on load. -->
+    <div class="sun" aria-hidden="true"></div>
+
+    <!-- Thin diagonal rule + charcoal triangle, cubist scaffolding -->
+    <div class="triangle" aria-hidden="true"></div>
+
+    <!-- ----------------------------------------------------------
+         CROW MARK
+
+         Currently a PNG (crow.png) - the tight faceted head portrait.
+         This is the one external asset on the page. To go back to a
+         pure inline SVG later, replace the <img> with your <svg> and
+         give shapes class="plane" + style="--i:N" to re-enable the
+         staggered entrance animation.
+         ---------------------------------------------------------- -->
+    <div class="bird">
+      <img class="bird__img plane" style="--i:1"
+           src="static/img/crow.png"
+           alt="Faceted geometric crow, head and shoulders, facing right"
+           width="320" height="320" decoding="async">
+    </div>
+
+    <!-- Title block -->
+    <div class="masthead">
+      <h1 class="title">BIRDHAUS</h1>
+      <p class="subtitle">Forms Over Feathers</p>
+      <p class="tagline">A modernist movement of geometric avian studies.</p>
+      <p class="est">Est. 2026</p>
+    </div>
+
+  </header>
+
+  <main>
+    <!-- ============================================================
+         7 - MANIFESTO
+         ============================================================ -->
+    <section class="manifesto" aria-labelledby="manifesto-heading">
+      <h2 id="manifesto-heading" class="visually-hidden">Manifesto</h2>
+      <ul class="manifesto__list">
+        <li>We reject realism.</li>
+        <li>We embrace reduction.</li>
+        <li>We see birds in shapes.</li>
+        <li>We build with geometry.</li>
+      </ul>
+    </section>
+
+    <!-- ============================================================
+         8 - THE COLLECTION
+         ============================================================ -->
+    <section class="collection" aria-labelledby="collection-heading">
+      <h2 id="collection-heading" class="collection__heading">The Collection</h2>
+      <ol class="collection__list">
+        <li class="collection__item">
+          <a href="#001">
+            <span class="collection__no">001</span>
+            <span class="collection__name">The Crow</span>
+          </a>
+        </li>
+        <li class="collection__item">
+          <a href="#002">
+            <span class="collection__no">002</span>
+            <span class="collection__name">The Bluejay</span>
+          </a>
+        </li>
+        <li class="collection__item">
+          <a href="#003">
+            <span class="collection__no">003</span>
+            <span class="collection__name">The Raven</span>
+          </a>
+        </li>
+        <li class="collection__item">
+          <a href="#004">
+            <span class="collection__no">004</span>
+            <span class="collection__name">The Magpie</span>
+          </a>
+        </li>
+      </ol>
+
+      <!-- ===== 9 - CTA ===== -->
+      <a class="cta" href="#001">
+        View Collection 001
+        <span class="cta__arrow" aria-hidden="true">-&gt;</span>
+      </a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="footer__mark" aria-hidden="true"></span>
+    <p>The International Birdhaus Society</p>
+  </footer>
+
+  <script src="static/js/script.js"></script>
+</body>
+</html>

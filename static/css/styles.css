@@ -1,0 +1,392 @@
+/* ============================================================
+   BIRDHAUS - styles.css
+   A lost Bauhaus exhibition poster, EST. 2026.
+   ============================================================ */
+
+/* ---- PALETTE & TOKENS ---- */
+:root {
+  --cream:    #F4F1EA;  /* off-white paper */
+  --black:    #141414;  /* ink */
+  --charcoal: #3A3A3A;  /* geometric shapes */
+  --gray:     #8A857B;  /* muted rules / secondary text */
+  --taupe:    #9B9082;  /* warm taupe - the textile/tufted mid-tone */
+  --red:      #C0382B;  /* the one strong red sun (matches the rug red) */
+  --blue:     #2A3A66;  /* optional deep blue accent */
+
+  --rule:     1px;      /* thin rule weight */
+  --maxw:     1100px;   /* content max width */
+  --gutter:   clamp(1.25rem, 5vw, 4rem);
+
+  /* System font stack. To add a real font later (e.g. a condensed
+     grotesque like "Archivo" or "Oswald"), load it via <link> in
+     index.html and prepend it here - the stack remains a fallback. */
+  --font-display: "Helvetica Neue", "Arial Narrow", Helvetica, Arial, sans-serif;
+  --font-body:    system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ---- RESET ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--black);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  /* faint paper texture via layered gradients - no image assets */
+  background-image:
+    radial-gradient(circle at 80% 12%, rgba(0,0,0,0.015) 0, transparent 60%),
+    radial-gradient(circle at 10% 90%, rgba(0,0,0,0.02) 0, transparent 55%);
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ============================================================
+   POSTER HERO
+   Asymmetric grid: bird occupies the upper-right field, masthead anchors
+   the lower-left. Sun + bars float as compositional weights.
+   ============================================================ */
+.poster {
+  position: relative;
+  min-height: 100svh;            /* full viewport, modern unit */
+  min-height: 100vh;             /* fallback for older browsers */
+  overflow: hidden;
+  padding: var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "bird bird"
+    "mast mast";
+  gap: var(--gutter);
+  /* a hairline frame, like a printed poster border */
+  border: var(--rule) solid var(--black);
+  outline: var(--gutter) solid var(--cream); /* breathing room inside viewport */
+  outline-offset: calc(-1 * var(--gutter));
+}
+
+@media (min-width: 760px) {
+  .poster {
+    grid-template-areas:
+      "mast bird"
+      "mast bird";
+  }
+}
+
+/* ---- MASTHEAD / TITLE BLOCK ---- */
+.masthead {
+  grid-area: mast;
+  align-self: end;
+  position: relative;
+  z-index: 3;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  /* big, bold, condensed feel */
+  font-size: clamp(3.25rem, 16vw, 11rem);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  margin: 0;
+  transform: scaleY(1.08);        /* fake-condense -> taller letterforms */
+  transform-origin: bottom left;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: clamp(0.9rem, 2.4vw, 1.4rem);
+  margin: 1.1rem 0 0;
+  /* red underline rule */
+  display: inline-block;
+  border-bottom: 3px solid var(--red);
+  padding-bottom: 0.35rem;
+}
+
+.tagline {
+  max-width: 34ch;
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  color: var(--charcoal);
+  margin: 1.4rem 0 0;
+}
+
+.est {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin: 1.6rem 0 0;
+  color: var(--blue);
+}
+
+/* ---- CROW MARK ---- */
+.bird {
+  grid-area: bird;
+  align-self: center;
+  justify-self: end;
+  width: min(56vw, 580px);
+  z-index: 2;
+}
+.bird__img {
+  width: 100%;
+  height: auto;
+  /* crow.png has a transparent background, so it sits straight on
+     the cream poster. (If you ever swap in a white-bg version,
+     add: mix-blend-mode: multiply;) */
+}
+@media (max-width: 759px) {
+  .bird { width: min(72vw, 380px); justify-self: center; }
+}
+
+/* ---- RED SUN MOTIF ---- */
+.sun {
+  position: absolute;
+  top: clamp(2rem, 12vh, 9rem);
+  right: clamp(1rem, 8vw, 7rem);
+  width: clamp(120px, 22vw, 260px);
+  aspect-ratio: 1;
+  background: var(--red);
+  border-radius: 50%;
+  z-index: 1;                      /* sits behind the bird */
+}
+
+/* ---- VERTICAL BLACK BARS ---- */
+.bars {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.bar {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: clamp(8px, 1.1vw, 16px);
+  background: var(--black);
+}
+.bar--1 { left: 18%;  background: var(--black);    opacity: 0.9; }
+.bar--2 { left: 22%;  width: 4px; background: var(--gray); }
+.bar--3 { right: 30%; background: var(--charcoal); top: 30%; }
+
+/* ---- CHARCOAL TRIANGLE (cubist scaffold) ---- */
+.triangle {
+  position: absolute;
+  bottom: clamp(1rem, 8vh, 6rem);
+  right: clamp(1rem, 6vw, 5rem);
+  width: 0; height: 0;
+  border-left:  clamp(40px, 9vw, 110px) solid transparent;
+  border-bottom: clamp(60px, 13vw, 150px) solid var(--blue);
+  z-index: 0;
+  opacity: 0.85;
+}
+
+/* ============================================================
+   MANIFESTO
+   ============================================================ */
+.manifesto {
+  max-width: var(--maxw);
+  margin: clamp(3rem, 9vw, 7rem) auto;
+  padding: 0 var(--gutter);
+}
+.manifesto__list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: grid;
+  gap: 0;
+}
+.manifesto__list li {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-size: clamp(1.5rem, 6vw, 3.4rem);
+  line-height: 1.05;
+  padding: clamp(0.6rem, 1.6vw, 1rem) 0;
+  border-bottom: var(--rule) solid var(--black);
+}
+.manifesto__list li:first-child { border-top: var(--rule) solid var(--black); }
+/* alternate a red marker on every other line */
+.manifesto__list li:nth-child(even) { color: var(--charcoal); }
+.manifesto__list li:nth-child(even)::before {
+  content: "";
+  display: inline-block;
+  width: 0.7em; height: 0.7em;
+  margin-right: 0.5em;
+  background: var(--red);
+  border-radius: 50%;
+  vertical-align: 0.02em;
+}
+
+/* ============================================================
+   COLLECTION
+   ============================================================ */
+.collection {
+  max-width: var(--maxw);
+  margin: clamp(3rem, 9vw, 7rem) auto;
+  padding: 0 var(--gutter);
+}
+.collection__heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  margin: 0 0 1.5rem;
+  color: var(--blue);
+}
+.collection__list {
+  list-style: none;
+  margin: 0; padding: 0;
+  counter-reset: none;
+}
+.collection__item a {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(1rem, 4vw, 3rem);
+  text-decoration: none;
+  padding: clamp(0.7rem, 1.8vw, 1.2rem) 0;
+  border-top: var(--rule) solid var(--black);
+  transition: padding-left 0.25s ease, background-color 0.25s ease;
+}
+.collection__list li:last-child a { border-bottom: var(--rule) solid var(--black); }
+
+.collection__no {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--gray);
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  min-width: 3ch;
+}
+.collection__name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: clamp(1.4rem, 5vw, 2.6rem);
+}
+
+/* hover: slide right, ink fill, red number */
+@media (hover: hover) {
+  .collection__item a:hover,
+  .collection__item a:focus-visible {
+    padding-left: clamp(0.8rem, 3vw, 2rem);
+    background-color: var(--black);
+    color: var(--cream);
+    outline: none;
+  }
+  .collection__item a:hover .collection__no,
+  .collection__item a:focus-visible .collection__no { color: var(--red); }
+}
+/* keyboard focus fallback for non-hover devices */
+.collection__item a:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 2px;
+}
+
+/* ---- CTA ---- */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: clamp(0.85rem, 2vw, 1.05rem);
+  text-decoration: none;
+  color: var(--cream);
+  background: var(--red);
+  padding: 0.9rem 1.6rem;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.cta__arrow { transition: transform 0.2s ease; }
+@media (hover: hover) {
+  .cta:hover, .cta:focus-visible { background: var(--black); outline: none; }
+  .cta:hover .cta__arrow, .cta:focus-visible .cta__arrow { transform: translateX(4px); }
+}
+.cta:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 4rem) var(--gutter) clamp(3rem, 8vw, 5rem);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-top: 3px solid var(--black);
+}
+.footer__mark {
+  width: 18px; height: 18px;
+  background: var(--red);
+  border-radius: 50%;
+  flex: none;
+}
+.footer p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+}
+
+/* ============================================================
+   MOTION - entrance animations
+   Elements start displaced; script.js adds .is-loaded to <body>.
+   ============================================================ */
+.sun, .bird .plane, .title, .subtitle {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* default (pre-load) states */
+body:not(.is-loaded) .sun      { transform: scale(0.2); opacity: 0; }
+body:not(.is-loaded) .title    { opacity: 0; transform: translateY(18px) scaleY(1.08); }
+body:not(.is-loaded) .subtitle { opacity: 0; }
+body:not(.is-loaded) .bird .plane { opacity: 0; }
+
+/* loaded states + transitions */
+.sun {
+  transition: transform 0.9s var(--ease), opacity 0.9s ease;
+}
+.title {
+  transition: opacity 0.8s ease 0.1s, transform 0.8s var(--ease) 0.1s;
+}
+.subtitle {
+  transition: opacity 0.8s ease 0.45s;
+}
+.bird .plane {
+  transition: opacity 0.6s ease calc(var(--i, 0) * 0.09s + 0.3s),
+              transform 0.6s var(--ease) calc(var(--i, 0) * 0.09s + 0.3s);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+body:not(.is-loaded) .bird .plane { transform: translateY(10px) scale(0.96); }
+
+/* ---- RESPECT REDUCED MOTION ---- */
+@media (prefers-reduced-motion: reduce) {
+  .sun, .bird .plane, .title, .subtitle, .cta, .cta__arrow,
+  .collection__item a {
+    transition: none !important;
+    animation: none !important;
+  }
+  /* ensure everything is visible immediately, regardless of JS */
+  body .sun      { transform: none; opacity: 1; }
+  body .title    { transform: scaleY(1.08); opacity: 1; }
+  body .subtitle { opacity: 1; }
+  body .bird .plane { transform: none; opacity: 1; }
+}
